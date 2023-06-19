@@ -1,5 +1,5 @@
 {
-  "name": "terraform-aws-dynamodb-kafka-outbox",
+  "name": "dynamodb-kafka-outbox",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,7 @@
     "clean": "rm -rf dist && rm -rf layer",
     "test": "jest --coverage",
     "lint": "eslint . --ext .ts",
-    "ci-build": "run-s clean lint test build"
+    "ci-build": "run-s clean lint test build && ./scripts/post-build.sh"
   },
   "keywords": [],
   "author": "",

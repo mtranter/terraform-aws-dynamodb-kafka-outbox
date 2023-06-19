@@ -3,6 +3,6 @@
     "extends": "./tsconfig.base.json",
     "compilerOptions": {
         "module": "esnext",        
-        "outDir": "./layer"
+        "outDir": "./layer/nodejs/node_modules/dynamodb-kafka-outbox"
     }
 }

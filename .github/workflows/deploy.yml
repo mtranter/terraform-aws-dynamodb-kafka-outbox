@@ -13,16 +13,11 @@ jobs:
           version: 8.6.2
       - uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
       - run: pnpm install
       - run: pnpm run ci-build
       - run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-      - run: lerna version --yes --no-git-tag-version --no-push $RELEASE_VERSION
-      # - run: |
-      #     git config --global user.email "bot@ezapi.com"
-      #     git config --global user.name "EZAPI Bot"
-      #     git commit -am "Bump"
       - run: pnpm publish -r --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
