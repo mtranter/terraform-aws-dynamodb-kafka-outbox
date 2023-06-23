@@ -34,6 +34,7 @@ jobs:
           path: layer
           retention-days: 1
   terraform_deploy:
+    needs: [npm_deploy]
     runs-on: ubuntu-latest
     defaults:
       run:
