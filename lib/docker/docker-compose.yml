@@ -1,0 +1,29 @@
+services:
+  redpanda:
+    build: .
+    ports:
+      - 9092:9092
+      - 9644:9644
+      - 8081:8081
+    command: redpanda start --overprovisioned --smp 1 --memory 1G --reserve-memory 0M --node-id 0 --check=false
+    networks: 
+    - testing-network
+  rpk:
+    image: vectorized/redpanda:latest
+    depends_on:
+      - redpanda
+    networks: 
+    - testing-network
+    entrypoint: ''
+    command: 
+      - /bin/sh
+      - -c
+      - |
+        sleep 5
+        rpk cluster config set kafka_enable_authorization true --api-urls redpanda:9644
+        rpk cluster config set superusers ['test-user'] --api-urls redpanda:9644
+        rpk acl user create test-user --password test-password --api-urls redpanda:9644
+        rpk topic create test-topic --brokers redpanda:9092 --user test-password --password test-password --sasl-mechanism SCRAM-SHA-256
+        rpk acl create --allow-principal User:test-user --operation 'ALL' --topic 'test-topic' --brokers redpanda:9092 --user test-password --password test-password --sasl-mechanism SCRAM-SHA-256
+networks:
+  testing-network:

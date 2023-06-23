@@ -25,8 +25,8 @@ export const _handler =
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const { NewImage } = next.dynamodb!;
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const object = unmarshall(NewImage!) as { data: TxOutboxMessage };
-      const { topic, key, value, headers } = object.data;
+      const object = unmarshall(NewImage as any) as TxOutboxMessage;
+      const { topic, key, value, headers } = object;
       if (!topic || !value) {
         log.error("Invalid outbox messages", object);
         throw new Error("Invalid outbox messages: " + JSON.stringify(object));

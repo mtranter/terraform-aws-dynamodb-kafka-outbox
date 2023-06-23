@@ -23,25 +23,21 @@ describe("tx-outbox", () => {
     const dynamoSerializedTxMsg = {
       dynamodb: {
         NewImage: {
-          data: {
-            M: {
-              topic: {
-                S: msg.topic,
-              },
-              key: {
-                S: msg.key,
-              },
-              value: {
-                S: msg.value,
-              },
-            },
+          topic: {
+            S: msg.topic,
+          },
+          key: {
+            S: msg.key,
+          },
+          value: {
+            S: msg.value,
           },
         },
       },
     };
     const event = {
       Records: [dynamoSerializedTxMsg],
-    };    
+    };
     await handler(event, null as any, null as any);
     expect(sendBatch).toBeCalledWith({
       topicMessages: [
@@ -78,22 +74,18 @@ describe("tx-outbox", () => {
     const dynamoSerializedTxMsg = {
       dynamodb: {
         NewImage: {
-          data: {
-            M: {
-              topic: {
-                S: msg.topic,
-              },
-              value: {
-                S: msg.value,
-              },
-            },
+          topic: {
+            S: msg.topic,
+          },
+          value: {
+            S: msg.value,
           },
         },
       },
     };
     const event = {
       Records: [dynamoSerializedTxMsg],
-    };    
+    };
     await handler(event, null as any, null as any);
     expect(sendBatch).toBeCalledWith({
       topicMessages: [
@@ -130,24 +122,20 @@ describe("tx-outbox", () => {
     const dynamoSerializedTxMsg = {
       dynamodb: {
         NewImage: {
-          data: {
-            M: {
-              key: {
-                S: msg.key,
-              },
-              value: {
-                S: msg.value,
-              },
-            },
+          key: {
+            S: msg.key,
+          },
+          value: {
+            S: msg.value,
           },
         },
       },
     };
     const event = {
       Records: [dynamoSerializedTxMsg],
-    };    
+    };
     expect(handler(event, null as any, null as any)).rejects.toThrowError();
-    expect(sendBatch).not.toHaveBeenCalled
+    expect(sendBatch).not.toHaveBeenCalled;
   });
 
   it("should throw if value not present message to kafka", async () => {
@@ -170,23 +158,19 @@ describe("tx-outbox", () => {
     const dynamoSerializedTxMsg = {
       dynamodb: {
         NewImage: {
-          data: {
-            M: {
-              topic: {
-                S: msg.topic,
-              },
-              key: {
-                S: msg.key,
-              },
-            },
+          topic: {
+            S: msg.topic,
+          },
+          key: {
+            S: msg.key,
           },
         },
       },
     };
     const event = {
       Records: [dynamoSerializedTxMsg],
-    };    
+    };
     expect(handler(event, null as any, null as any)).rejects.toThrowError();
-    expect(sendBatch).not.toHaveBeenCalled
+    expect(sendBatch).not.toHaveBeenCalled;
   });
 });
