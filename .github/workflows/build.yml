@@ -1,5 +1,8 @@
 name: Build and test
-on: push
+on: 
+  push:
+    branches:
+    - main
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,3 +23,15 @@ jobs:
       - run: docker-compose -f ./docker/docker-compose.yml up -d
       - run: sleep 10
       - run: pnpm test:int
+  layer_validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: layer
+    steps:
+      - uses: actions/checkout@v3
+      - run: terraform init
+      - run: terraform validate
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

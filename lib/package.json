@@ -2,7 +2,8 @@
   "name": "dynamodb-kafka-outbox",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "run-p build:layer build:lib",
     "build:layer": "rollup -c",
