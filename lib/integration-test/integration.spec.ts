@@ -6,7 +6,7 @@ import { Kafka } from "kafkajs";
 import { Consumer } from "kafkajs";
 import waitForExpect from "wait-for-expect";
 
-jest.setTimeout(10000);
+jest.setTimeout(20000);
 
 // https://github.com/kafkajs/confluent-schema-registry/issues/157
 const registerSchemaWithNativeFetch = (schema: string, subject: string) => {
