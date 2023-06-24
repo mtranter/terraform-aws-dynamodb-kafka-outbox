@@ -41,7 +41,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: layer-handler
-          path: ./../lib/layer  
       - name: 'Echo download path'
         run: echo ${{steps.download.outputs.download-path}}
       - run: ls -la ./../
