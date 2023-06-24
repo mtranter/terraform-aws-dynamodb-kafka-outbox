@@ -22,7 +22,7 @@ data "archive_file" "lambda_layer_payload" {
 
 resource "aws_lambda_layer_version" "lambda_layer" {
   filename            = data.archive_file.lambda_layer_payload.output_path
-  layer_name          = "dynamodb-kakfa-outbox${var.is_beta ? "-beta" : ""}}"
+  layer_name          = "dynamodb-kakfa-outbox${var.is_beta ? "-beta" : ""}"
   skip_destroy        = true
   source_code_hash    = filebase64sha256(data.archive_file.lambda_layer_payload.output_path)
   compatible_runtimes = ["nodejs18.x"]
