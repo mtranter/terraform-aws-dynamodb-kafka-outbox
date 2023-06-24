@@ -42,6 +42,8 @@ jobs:
         with:
           name: layer-handler
           path: ./../lib/layer  
+      - name: 'Echo download path'
+        run: echo ${{steps.download.outputs.download-path}}
       - run: ls -la ./../
       - run: ls -la ./../lib
       - run: ls -la ./../lib/layer
