@@ -23,7 +23,7 @@ jobs:
       - run: docker-compose -f ./docker/docker-compose.yml up -d
       - run: sleep 10
       - run: pnpm test:int
-      - name: Archive code coverage results
+      - name: Upload layer source artifact
         uses: actions/upload-artifact@v3
         with:
           name: layer-handler
