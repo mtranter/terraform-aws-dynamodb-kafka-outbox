@@ -27,7 +27,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: layer-handler
-          path: ./layer/*
+          path: lib/layer
           retention-days: 1
   layer_validate:
     runs-on: ubuntu-latest
@@ -41,13 +41,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: layer-handler
-      - name: 'Echo download path'
-        run: echo ${{steps.download.outputs.download-path}}
-      - run: ls -la
-      # - run: mv ./layer ./../lib/
-      - run: ls -la ./../
-      - run: ls -la ./../lib
-      - run: ls -la ./../lib/layer
+          path: lib/layer
       - run: terraform init
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
