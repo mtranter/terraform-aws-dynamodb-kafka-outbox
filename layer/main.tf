@@ -30,7 +30,7 @@ resource "aws_lambda_layer_version" "lambda_layer" {
 
 resource "aws_lambda_layer_version_permission" "lambda_layer_permission" {
   count          = var.is_beta ? 0 : 1
-  layer_name     = aws_lambda_layer_version.lambda_layer.id
+  layer_name     = aws_lambda_layer_version.lambda_layer.layer_name
   version_number = aws_lambda_layer_version.lambda_layer.version
   principal      = "*"
   action         = "lambda:GetLayerVersion"
