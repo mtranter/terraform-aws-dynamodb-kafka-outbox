@@ -42,11 +42,14 @@ jobs:
         with:
           name: layer-handler
           path: ./../lib/layer
+      - run: ls -la ./../
+      - run: ls -la ./../lib
+      - run: ls -la ./../lib/layer
       - run: terraform init
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      - run: terraform plan
+      - run: terraform plan -var is_beta=false
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
