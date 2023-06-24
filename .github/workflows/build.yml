@@ -27,7 +27,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: layer-handler
-          path: layer
+          path: ./layer
           retention-days: 1
   layer_validate:
     runs-on: ubuntu-latest
