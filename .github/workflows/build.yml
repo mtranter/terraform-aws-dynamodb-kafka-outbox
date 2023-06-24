@@ -27,7 +27,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: layer-handler
-          path: ./layer
+          path: ./layer/*
           retention-days: 1
   layer_validate:
     runs-on: ubuntu-latest
@@ -41,7 +41,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: layer-handler
-          path: ./../lib/layer
+          path: ./../lib/layer  
       - run: ls -la ./../
       - run: ls -la ./../lib
       - run: ls -la ./../lib/layer
