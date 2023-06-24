@@ -23,6 +23,12 @@ jobs:
       - run: docker-compose -f ./docker/docker-compose.yml up -d
       - run: sleep 10
       - run: pnpm test:int
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: layer-handler
+          path: layer
+          retention-days: 1
   layer_validate:
     runs-on: ubuntu-latest
     defaults:
@@ -30,8 +36,13 @@ jobs:
         working-directory: layer
     steps:
       - uses: actions/checkout@v3
+      - name: Download a single artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: layer-handler
+          path: ./../lib/layer
       - run: terraform init
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      - run: terraform validate
+      - run: terraform plan
