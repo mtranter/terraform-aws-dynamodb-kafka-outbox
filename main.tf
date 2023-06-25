@@ -13,7 +13,7 @@ module "streams_handler" {
   source   = "github.com/mtranter/platform-in-a-box-aws//modules/terraform-aws-piab-lambda"
   name     = var.instance_name
   runtime  = "nodejs18.x"
-  handler  = "${data.archive_file.tx_outbox.source_content_filename}.handler"
+  handler  = "tx-outbox-handler.handler"
   filename = data.archive_file.tx_outbox.output_path
 
   layers     = [var.handler_layer]
