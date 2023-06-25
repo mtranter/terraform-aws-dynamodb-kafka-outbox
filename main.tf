@@ -1,7 +1,7 @@
 data "archive_file" "tx_outbox" {
   type                    = "zip"
   output_path             = "${path.module}/tx-outbox-handler.zip"
-  source_content_filename = "tx-outbox-handler"
+  source_content_filename = "tx-outbox-handler.js"
   source_content          = <<EOF
 const { handler } = require('dynamodb-kafka-outbox')
 exports.handler = handler;
