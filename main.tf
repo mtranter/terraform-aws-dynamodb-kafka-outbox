@@ -66,6 +66,7 @@ resource "aws_lambda_event_source_mapping" "streams_source" {
   event_source_arn  = var.source_table_stream_arn
   function_name     = module.streams_handler.function.arn
   starting_position = "TRIM_HORIZON"
+  depends_on = [ aws_iam_role_policy.aws_iam_role_policy.events_handler_can_dynamo ]
   filter_criteria {
     filter {
       pattern = jsonencode({
