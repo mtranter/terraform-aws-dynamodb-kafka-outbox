@@ -30,5 +30,5 @@ variable "handler_layer" {
 
 variable "kafka_use_ssl" {
   type    = bool
-  default = false
+  default = true
 }
