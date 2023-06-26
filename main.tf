@@ -17,7 +17,7 @@ module "streams_handler" {
   filename = data.archive_file.tx_outbox.output_path
 
   layers     = [var.handler_layer]
-  create_dlq = true
+  create_dlq = false
   environment_vars = {
     // kafka broker host. Split by :// to remove the protocol
     KAFKA_BROKERS        = join(",", var.kafka_brokers)
@@ -46,6 +46,16 @@ resource "aws_iam_role_policy" "events_handler_can_dynamo" {
             ]
         },
         {
+            "Sid": "CanDLQ",
+            "Effect": "Allow",
+            "Action": [
+                "sqs:SendMessage"
+            ],
+            "Resource": [
+                "${aws_sqs_queue.queue.arn}"
+            ]
+        },
+        {
             "Sid": "APIAccessForDynamoDBStreams",
             "Effect": "Allow",
             "Action": [
@@ -62,11 +72,20 @@ EOF
 }
 
 
+resource "aws_sqs_queue" "queue" {
+  name                       = "${var.instance_name}_dlq"
+}
+
 resource "aws_lambda_event_source_mapping" "streams_source" {
   event_source_arn  = var.source_table_stream_arn
   function_name     = module.streams_handler.function.arn
   starting_position = "TRIM_HORIZON"
   depends_on = [ aws_iam_role_policy.events_handler_can_dynamo ]
+  destination_config {
+    on_failure {
+      destination = aws_sqs_queue.queue.arn
+    }
+  }
   filter_criteria {
     filter {
       pattern = jsonencode({
