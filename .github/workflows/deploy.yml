@@ -24,6 +24,7 @@ jobs:
       - run: sleep 10
       - run: pnpm test:int
       - run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - run: npm pkg set 'version'="${RELEASE_VERSION}"
       - run: pnpm publish -r --access public --no-git-checks --tag prerelease
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
