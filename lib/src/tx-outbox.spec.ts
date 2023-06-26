@@ -19,6 +19,7 @@ describe("tx-outbox", () => {
       topic: "topic-1",
       key: key64,
       value: value64,
+      isEvent: true
     };
     const dynamoSerializedTxMsg = {
       dynamodb: {
@@ -70,6 +71,7 @@ describe("tx-outbox", () => {
       topic: "topic-1",
       key: key64,
       value: value64,
+      isEvent: true
     };
     const dynamoSerializedTxMsg = {
       dynamodb: {
@@ -118,6 +120,7 @@ describe("tx-outbox", () => {
       topic: "topic-1",
       key: key64,
       value: value64,
+      isEvent: true
     };
     const dynamoSerializedTxMsg = {
       dynamodb: {
@@ -154,6 +157,7 @@ describe("tx-outbox", () => {
       topic: "topic-1",
       key: key64,
       value: value64,
+      isEvent: true
     };
     const dynamoSerializedTxMsg = {
       dynamodb: {
