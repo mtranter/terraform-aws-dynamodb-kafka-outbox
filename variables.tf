@@ -25,7 +25,7 @@ variable "kafka_auth_mechanism" {
 
 variable "handler_layer" {
   type    = string
-  default = "arn:aws:lambda:ap-southeast-2:340502884936:layer:dynamodb-kakfa-outbox:1"
+  default = "arn:aws:lambda:ap-southeast-2:340502884936:layer:dynamodb-kakfa-outbox:2"
 }
 
 variable "kafka_use_ssl" {
