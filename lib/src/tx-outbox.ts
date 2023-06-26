@@ -25,25 +25,29 @@ export const _handler =
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const { NewImage } = next.dynamodb!;
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const object = unmarshall(NewImage as any) as TxOutboxMessage;
-      const { topic, key, value, headers } = object;
-      if (!topic || !value) {
-        log.error("Invalid outbox messages", object);
-        throw new Error("Invalid outbox messages: " + JSON.stringify(object));
+      if (NewImage) {
+        const object = unmarshall(NewImage as any) as TxOutboxMessage;
+        const { topic, key, value, headers } = object;
+        if (!topic || !value) {
+          log.error("Invalid outbox messages", object);
+          throw new Error("Invalid outbox messages: " + JSON.stringify(object));
+        }
+        const existingBatch = batch[topic] || [];
+        const newBatch = {
+          ...batch,
+          [topic]: [
+            ...existingBatch,
+            {
+              key: key ? Buffer.from(key, "base64") : undefined,
+              value: Buffer.from(value, "base64"),
+              headers,
+            },
+          ],
+        };
+        return newBatch;
+      } else {
+        return batch;
       }
-      const existingBatch = batch[topic] || [];
-      const newBatch = {
-        ...batch,
-        [topic]: [
-          ...existingBatch,
-          {
-            key: key ? Buffer.from(key, "base64") : undefined,
-            value: Buffer.from(value, "base64"),
-            headers,
-          },
-        ],
-      };
-      return newBatch;
     }, {});
 
     const topicMessages: TopicMessages[] = Object.entries(batch).map(
