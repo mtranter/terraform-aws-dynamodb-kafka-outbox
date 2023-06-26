@@ -56,6 +56,8 @@ export const _handler =
         messages,
       })
     );
-    const producer = await producerP;
-    await producer.sendBatch({ topicMessages, acks: -1 });
+    if (topicMessages.length > 0) {
+      const producer = await producerP;
+      await producer.sendBatch({ topicMessages, acks: -1 });
+    }
   };
