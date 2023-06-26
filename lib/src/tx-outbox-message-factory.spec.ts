@@ -32,6 +32,7 @@ describe("tx-outbox-message-factory", () => {
         topic: "topic-1",
         key: encodedKey,
         value: encodedValue,
+        isEvent: true,
       });
     });
     it("should create a message sans key", async () => {
@@ -52,6 +53,7 @@ describe("tx-outbox-message-factory", () => {
         headers: undefined,
         topic: "topic-1",
         value: encodedValue,
+        isEvent: true,
       });
     });
   });
