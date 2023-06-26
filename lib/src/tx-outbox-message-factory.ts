@@ -38,6 +38,7 @@ export const TxOutboxMessageFactory = ({
       headers,
       partition,
       timestamp,
+      isEvent: true
     };
   },
 });

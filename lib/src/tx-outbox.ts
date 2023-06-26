@@ -10,6 +10,7 @@ export type TxOutboxMessage = {
   partition?: number;
   headers?: Record<string, string>;
   timestamp?: string;
+  isEvent: true;
 };
 
 export const _handler =
