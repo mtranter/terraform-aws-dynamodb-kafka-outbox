@@ -83,7 +83,7 @@ resource "aws_lambda_event_source_mapping" "streams_source" {
   depends_on = [ aws_iam_role_policy.events_handler_can_dynamo ]
   destination_config {
     on_failure {
-      destination = aws_sqs_queue.queue.arn
+      destination_arn = aws_sqs_queue.queue.arn
     }
   }
   filter_criteria {
