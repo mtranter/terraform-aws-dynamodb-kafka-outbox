@@ -92,7 +92,7 @@ resource "aws_lambda_event_source_mapping" "streams_source" {
         eventName = ["INSERT"]
         dynamodb = {
           NewImage = {
-            isEvent = {
+            isTxOutboxEvent = {
               BOOL = [true]
             }
           }
